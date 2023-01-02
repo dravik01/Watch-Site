@@ -6,7 +6,7 @@ var macAddress = "";
 var computerName = "";
 
 
-let request = new XMLHttpRequest();
+const request = new XMLHttpRequest();
 request.open("GET", "https://api.ipify.org?format=text");
 request.send();
 request.onload = () => {
@@ -19,7 +19,13 @@ request.onload = () => {
             if (request.status == 200) {
                 alldata = (request.response);
             }
+            else {
+                console.error(request.statusText);
+            }
         }
+    }
+    else {
+        console.error(request.statusText);
     }
 }
 
