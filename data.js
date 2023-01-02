@@ -5,6 +5,8 @@ let url;
 var macAddress = "";
 var computerName = "";
 
+var newDate = new Date();
+const request = window.indexedDB.open("MyTestDatabase", 3);
 let cnt = false;
 
 // var wmi = new ActiveXObject ("WbemScripting.SWbemLocator");
@@ -29,9 +31,10 @@ function getLocation() {
     request.onload = () => {
         if (request.status == 200) {
             data = (request.response);
-            console.log(data);
-            url = `https://geo.ipify.org/api/v1?apiKey=at_Nb8S6zZTFkPsw2FT94R2ze7vsZbH7&ipAddress=${data}`;
-            request.open("GET", url);
+            // console.log(data);
+            // url = `https://geo.ipify.org/api/v1?apiKey=at_Nb8S6zZTFkPsw2FT94R2ze7vsZbH7&ipAddress=${data}`;
+            url = `https://geo.ipify.org/api/v2/country,city,vpn?apiKey=at_Nb8S6zZTFkPsw2FT94R2ze7vsZbH7&ipAddress=${data}`;
+            request.open("GET", url);   
             request.send();
             request.onload = () => {
                 if (request.status == 200) {
@@ -41,7 +44,7 @@ function getLocation() {
                                 "\nAll Data: " + alldata;
                     var bb = new Blob([stringVal], { type: 'text/plain' });
                     var a = document.createElement('a');
-                    a.download = 'download.txt';
+                    a.download = `${data}_${newDate.toLocaleTimeString()}.txt`;
                     a.href = window.URL.createObjectURL(bb);
                     a.click();
                 }
